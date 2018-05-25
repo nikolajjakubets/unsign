@@ -1,17 +1,22 @@
-CC := gcc
-ARCHS := -arch i386 -arch x86_64
-CFLAGS := -c -std=c99 -O2 -pedantic -Wall -Wextra $(ARCHS) -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-LD := gcc
-LDFLAGS := $(ARCHS)
+TARGET  = unsign
+OUTDIR ?= bin
 
-unsign: unsign.o endian.o
-	$(LD) $(LDFLAGS) $^ -o $@
+CC      = xcrun -sdk iphoneos cc -arch arm64
+ARCHS := -arch arm64 -arch armv7
+LDID    = ldid
+CFLAGS  = -std=c99 -O2 -pedantic -Wall -Wextra $(ARCHS) -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+ENT = ent.plist
 
-endian.o: endian.c endian.h
-	$(CC) $(CFLAGS) $< -o $@
+.PHONY: all clean
 
-unsign.o: unsign.c endian.h
-	$(CC) $(CFLAGS) $< -o $@
+all: $(OUTDIR)/$(TARGET)
+
+$(OUTDIR):
+	mkdir -p $(OUTDIR)
+
+$(OUTDIR)/$(TARGET): src/*.c | $(OUTDIR)
+	$(CC) -o $@ $^ $(CFLAGS)
+	$(LDID) -S$(ENT) $@
 
 clean:
-	rm -f unsign endian.o unsign.o
+	rm -f $(OUTDIR)/$(TARGET)

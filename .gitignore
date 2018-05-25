@@ -1,2 +1,2 @@
-*.o
-unsign
+.DS_Store
+bin/

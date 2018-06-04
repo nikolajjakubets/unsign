@@ -5,6 +5,6 @@ Version: 1.0-1
 Architecture: iphoneos-arm
 Description: Remove code signatures from iOS Mach-O binaries.
 Maintainer: Pwn20wnd <pwn20wndstuff@gmail.com>
-Maintainer: Pwn20wnd <pwn20wndstuff@gmail.com>
+Author: Pwn20wnd <pwn20wndstuff@gmail.com>
 Section: Utilities
 
